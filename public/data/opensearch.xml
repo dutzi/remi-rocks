@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/" xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+      <ShortName>remirocks</ShortName>
+      <Description>Set reminders</Description>
+      <InputEncoding>UTF-8</InputEncoding>
+      <OutputEncoding>UTF-8</OutputEncoding>
+      <Language>en-us</Language>
+      <Image width="32" height="32" type="image/png">https://remi.rocks/favicon.png</Image>
+      <Tags>remirocks</Tags>
+      <Url type="text/html" template="https://remi.rocks/?q={searchTerms}" />
+      <moz:SearchForm>https://remi.rock/?q=</moz:SearchForm>
+</OpenSearchDescription>

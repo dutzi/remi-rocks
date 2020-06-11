@@ -1,0 +1,26 @@
+.wrapper {
+  --primary-color: #cb11fc;
+  margin-top: 200px;
+
+  .perspective {
+    perspective: 4000px;
+
+    .newReminder {
+      display: flex;
+      justify-content: center;
+
+      .message {
+      }
+
+      .time {
+        color: var(--primary-color);
+      }
+
+      .status {
+        opacity: 0;
+        margin-left: 1em;
+        color: #999999;
+      }
+    }
+  }
+}
