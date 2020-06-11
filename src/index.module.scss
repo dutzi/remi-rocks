@@ -1,26 +1,40 @@
 .wrapper {
   --primary-color: #cb11fc;
-  margin-top: 200px;
+  margin: 200px 150px;
 
-  .perspective {
-    perspective: 4000px;
+  // .perspective {
+  //   perspective: 4000px;
 
-    .newReminder {
-      display: flex;
-      justify-content: center;
+  .reminders {
+    display: grid;
+    grid-template-columns: 0fr auto;
+    grid-gap: 0.5em 0.3em;
 
-      .message {
+    .timestamp {
+      color: var(--primary-color);
+      opacity: 0;
+
+      &:nth-child(1) {
+        opacity: 1;
       }
+    }
 
-      .time {
-        color: var(--primary-color);
-      }
+    .message {
+      max-width: calc(100vw - 730px);
+      opacity: 0;
+      color: #999999;
 
-      .status {
-        opacity: 0;
-        margin-left: 1em;
-        color: #999999;
+      &:nth-child(2) {
+        color: #6f6f6f;
+        opacity: 1;
       }
     }
   }
+
+  .status {
+    opacity: 0;
+    margin-left: 1em;
+    color: #999999;
+  }
+  // }
 }

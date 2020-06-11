@@ -70,6 +70,25 @@ export const setToken = functions.https.onCall(async (data, context) => {
   return { success: true };
 });
 
+export const getReminders = functions.https.onCall(async (data, context) => {
+  if (!context.auth) {
+    return { error: true, errorCode: 'auth/user-logged-out' };
+  }
+
+  const uid = context.auth.uid;
+
+  const notificationDocs = await admin
+    .firestore()
+    .collection('/notifications')
+    .where('status', '==', 'pending')
+    .where('uid', '==', uid)
+    .get();
+
+  const notifications = notificationDocs.docs.map((doc) => doc.data());
+
+  return { notifications };
+});
+
 function createNotificationCall(delay: number) {
   return async (context: functions.EventContext) => {
     await new Promise((resolve) => setTimeout(resolve, delay * 1000));

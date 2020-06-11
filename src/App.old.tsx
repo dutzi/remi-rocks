@@ -23,49 +23,6 @@ const logger = {
   },
 };
 
-function prettyPrintTimestamp(timestamp: number) {
-  const now = new Date().getTime();
-  const diff = timestamp - now;
-  if (diff < 1000 * 60) {
-    return Math.round(diff / 1000) + 's';
-  }
-
-  if (diff < 1000 * 60 * 60) {
-    return Math.round(diff / 60 / 1000) + 'm';
-  }
-
-  return Math.round(diff / 60 / 60 / 1000) + 'h';
-}
-
-function Reminder({ reminder, index }: { reminder: IReminder; index: number }) {
-  useEffect(() => {
-    anime({
-      targets: `#reminder_${index}`,
-      opacity: [0, 1],
-      translateY: [100, 0],
-      delay: index * 50,
-    });
-
-    anime({
-      targets: `#timestamp_${index}`,
-      opacity: [0, 1],
-      translateY: [100, 0],
-      delay: index * 50,
-    });
-  }, [index]);
-
-  return (
-    <>
-      <div id={`timestamp_${index}`} className={styles.timestamp}>
-        {prettyPrintTimestamp(reminder.timestamp)}
-      </div>
-      <div id={`reminder_${index}`} className={styles.message}>
-        “{reminder.message}”
-      </div>
-    </>
-  );
-}
-
 function App() {
   const [message, setMessage] = useState<string>();
   const [time, setTime] = useState<number>();
@@ -144,13 +101,6 @@ function App() {
               // showToken('Unable to retrieve refreshed token ', err);
             });
         });
-
-        firebase
-          .functions()
-          .httpsCallable('getReminders')()
-          .then((res) => {
-            setReminders(res.data.notifications);
-          });
       });
   }, []);
 
@@ -209,6 +159,21 @@ function App() {
   }, [token, message, time]);
 
   useEffect(() => {
+    setTimeout(() => {
+      setReminders([
+        { message: 'feed the cat', timestamp: 1591906136335 },
+        { message: 'go buy milk', timestamp: 1591906130000 },
+      ]);
+    }, 1000);
+    // firebase
+    //   .functions()
+    //   .httpsCallable('getReminders')()
+    //   .then((res) => {
+    //     setReminders(res.data);
+    //   });
+  }, []);
+
+  useEffect(() => {
     Notification.requestPermission(function (status) {
       logger.log('Notification permission status:', status);
     });
@@ -216,13 +181,20 @@ function App() {
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.reminders}>
-        <div className={styles.timestamp}>{prettyTime}</div>
-        <div className={styles.message}>
-          {message && <>“{message}”&nbsp;</>}
+      <div className={styles.newReminder} data-new-reminder>
+        <div className={styles.leftCol} data-left-col>
+          <div className={styles.message}>
+            {message && <>“{message}”&nbsp;</>}
+          </div>
+          <div className={styles.time}>{prettyTime}</div>
         </div>
-        {reminders?.map((reminder, index) => (
-          <Reminder key={index} reminder={reminder} index={index} />
+        {/* <div data-status className={styles.status}>
+          added!
+        </div> */}
+      </div>
+      <div className={styles.reminders}>
+        {reminders?.map((notification) => (
+          <div className={styles.reminder}>{notification.message}</div>
         ))}
       </div>
     </div>
