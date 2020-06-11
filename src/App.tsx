@@ -3,6 +3,7 @@ import styles from './index.module.scss';
 import parseQuery from './parse-query';
 import firebase from 'firebase/app';
 import anime from 'animejs';
+import Home from './pages/Home';
 
 enum State {
   Adding = 1,
@@ -73,6 +74,8 @@ function App() {
   const [prettyTime, setPrettyTime] = useState<string>();
   const [state, setState] = useState<State>();
   const [reminders, setReminders] = useState<IReminder[]>();
+
+  const hasQuery = !!new URLSearchParams(window.location.search).get('q');
 
   const sendTokenToServer = useCallback((token: string) => {
     const uid = firebase.auth().currentUser?.uid;
@@ -213,6 +216,10 @@ function App() {
       logger.log('Notification permission status:', status);
     });
   }, []);
+
+  if (!hasQuery) {
+    return <Home />;
+  }
 
   return (
     <div className={styles.wrapper}>

@@ -1,0 +1,49 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  header {
+    width: 588px;
+    border: 3px solid var(--primary-color);
+    border-top: none;
+    margin: auto;
+    height: 92px;
+    box-sizing: border-box;
+    padding: 0.5em;
+    display: flex;
+    align-items: flex-end;
+    position: relative;
+
+    .fold {
+      background: var(--primary-color);
+      width: 65px;
+      height: 65px;
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      box-shadow: 2px 2px 0px 0px inset white;
+
+      .whiteOverlay {
+        background-color: white;
+        width: 92px;
+        height: 92px;
+        position: absolute;
+        top: 22px;
+        left: 22px;
+        transform: rotate(45deg);
+      }
+    }
+  }
+
+  main {
+    font-size: 21px;
+    width: 588px;
+    margin: 50px auto;
+    flex: 1;
+
+    .highlight {
+      color: var(--primary-color);
+    }
+  }
+}

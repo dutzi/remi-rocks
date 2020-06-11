@@ -23,7 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "firebase deploy",
+    "deploy": "yarn build && firebase deploy",
     "deploy:hosting": "yarn build && firebase deploy --only hosting",
     "start:emulators": "firebase emulators:start"
   },
