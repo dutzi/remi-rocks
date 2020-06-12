@@ -4,12 +4,6 @@ import parseQuery from './parse-query';
 import firebase from 'firebase/app';
 import anime from 'animejs';
 
-enum State {
-  Adding = 1,
-  Added,
-  Error,
-}
-
 interface IReminder {
   message: string;
   timestamp: number;
@@ -71,7 +65,6 @@ export default function Reminders() {
   const [time, setTime] = useState<number>();
   const [token, setToken] = useState<string>();
   const [prettyTime, setPrettyTime] = useState<string>();
-  const [state, setState] = useState<State>();
   const [reminders, setReminders] = useState<IReminder[]>();
   const [showPermissionsMessage, setShowPermissionsMessage] = useState(false);
 
@@ -94,6 +87,12 @@ export default function Reminders() {
   }, [token, sendTokenToServer]);
 
   useEffect(() => {
+    firebase.messaging().onMessage((payload) => {
+      new Notification(payload.notification.title);
+    });
+  }, []);
+
+  useEffect(() => {
     firebase
       .auth()
       .signInAnonymously()
@@ -103,7 +102,9 @@ export default function Reminders() {
           'BNhBE-E5yZZOIGvvKkrf6Sfgs2GhR5G7v0N04rNiPSeKtftS5_J-C2uuh7M4IKganSLYAp61N7Z6001klipvpGo'
         );
 
-        setShowPermissionsMessage(true);
+        if (Notification.permission !== 'granted') {
+          setShowPermissionsMessage(true);
+        }
 
         messaging
           .getToken()
@@ -185,7 +186,6 @@ export default function Reminders() {
         timestamp: new Date(new Date().getTime() + time * 1000).getTime(),
       })
       .then(() => {
-        setState(State.Added);
         anime({
           targets: '[data-left-col]',
           // translateX: [0, -100],
