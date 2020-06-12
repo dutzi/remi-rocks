@@ -23,13 +23,57 @@ const logger = {
   },
 };
 
-function App() {
+function prettyPrintTimestamp(timestamp: number) {
+  const now = new Date().getTime();
+  const diff = timestamp - now;
+  if (diff < 1000 * 60) {
+    return Math.round(diff / 1000) + 's';
+  }
+
+  if (diff < 1000 * 60 * 60) {
+    return Math.round(diff / 60 / 1000) + 'm';
+  }
+
+  return Math.round(diff / 60 / 60 / 1000) + 'h';
+}
+
+function Reminder({ reminder, index }: { reminder: IReminder; index: number }) {
+  useEffect(() => {
+    anime({
+      targets: `#reminder_${index}`,
+      opacity: [0, 1],
+      translateY: [100, 0],
+      delay: index * 50,
+    });
+
+    anime({
+      targets: `#timestamp_${index}`,
+      opacity: [0, 1],
+      translateY: [100, 0],
+      delay: index * 50,
+    });
+  }, [index]);
+
+  return (
+    <>
+      <div id={`timestamp_${index}`} className={styles.timestamp}>
+        {prettyPrintTimestamp(reminder.timestamp)}
+      </div>
+      <div id={`reminder_${index}`} className={styles.message}>
+        “{reminder.message}”
+      </div>
+    </>
+  );
+}
+
+export default function Reminders() {
   const [message, setMessage] = useState<string>();
   const [time, setTime] = useState<number>();
   const [token, setToken] = useState<string>();
   const [prettyTime, setPrettyTime] = useState<string>();
   const [state, setState] = useState<State>();
   const [reminders, setReminders] = useState<IReminder[]>();
+  const [showPermissionsMessage, setShowPermissionsMessage] = useState(false);
 
   const sendTokenToServer = useCallback((token: string) => {
     const uid = firebase.auth().currentUser?.uid;
@@ -59,28 +103,23 @@ function App() {
           'BNhBE-E5yZZOIGvvKkrf6Sfgs2GhR5G7v0N04rNiPSeKtftS5_J-C2uuh7M4IKganSLYAp61N7Z6001klipvpGo'
         );
 
+        setShowPermissionsMessage(true);
+
         messaging
           .getToken()
           .then((currentToken) => {
             if (currentToken) {
               setToken(currentToken);
               logger.log(currentToken);
-              // updateUIForPushEnabled(currentToken);
+              setShowPermissionsMessage(false);
             } else {
-              logger.log('no token');
-              // Show permission request.
               logger.log(
                 'No Instance ID token available. Request permission to generate one.'
               );
-              // Show permission UI.
-              // updateUIForPushPermissionRequired();
-              // setTokenSentToServer(false);
             }
           })
           .catch((err) => {
             logger.log('An error occurred while retrieving token. ', err);
-            // showToken('Error retrieving Instance ID token. ', err);
-            // setTokenSentToServer(false);
           });
 
         messaging.onTokenRefresh(() => {
@@ -88,19 +127,20 @@ function App() {
             .getToken()
             .then((refreshedToken) => {
               logger.log('Token refreshed.');
-              // Indicate that the new Instance ID token has not yet been sent to the
-              // app server.
-              // setTokenSentToServer(false);
-              // Send Instance ID token to app server.
               setToken(refreshedToken);
               logger.log({ refreshedToken });
-              // ...
             })
             .catch((err) => {
               logger.log('Unable to retrieve refreshed token ', err);
-              // showToken('Unable to retrieve refreshed token ', err);
             });
         });
+
+        firebase
+          .functions()
+          .httpsCallable('getReminders')()
+          .then((res) => {
+            setReminders(res.data.notifications);
+          });
       });
   }, []);
 
@@ -158,47 +198,27 @@ function App() {
       });
   }, [token, message, time]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setReminders([
-        { message: 'feed the cat', timestamp: 1591906136335 },
-        { message: 'go buy milk', timestamp: 1591906130000 },
-      ]);
-    }, 1000);
-    // firebase
-    //   .functions()
-    //   .httpsCallable('getReminders')()
-    //   .then((res) => {
-    //     setReminders(res.data);
-    //   });
-  }, []);
-
-  useEffect(() => {
-    Notification.requestPermission(function (status) {
-      logger.log('Notification permission status:', status);
-    });
-  }, []);
-
   return (
     <div className={styles.wrapper}>
-      <div className={styles.newReminder} data-new-reminder>
-        <div className={styles.leftCol} data-left-col>
-          <div className={styles.message}>
-            {message && <>“{message}”&nbsp;</>}
+      {showPermissionsMessage && (
+        <div className={styles.permissions}>
+          <span className={styles.fingers} role="img" aria-label="fingers up">
+            👆👆👆
+          </span>
+          <div>
+            You'll have to allow notifications for us to remind you of stuff
           </div>
-          <div className={styles.time}>{prettyTime}</div>
         </div>
-        {/* <div data-status className={styles.status}>
-          added!
-        </div> */}
-      </div>
+      )}
       <div className={styles.reminders}>
-        {reminders?.map((notification) => (
-          <div className={styles.reminder}>{notification.message}</div>
+        <div className={styles.timestamp}>{prettyTime}</div>
+        <div className={styles.message}>
+          {message && <>“{message}”&nbsp;</>}
+        </div>
+        {reminders?.map((reminder, index) => (
+          <Reminder key={index} reminder={reminder} index={index} />
         ))}
       </div>
     </div>
   );
 }
-
-export default App;
