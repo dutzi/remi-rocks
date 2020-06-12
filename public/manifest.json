@@ -1,6 +1,6 @@
 {
   "short_name": "Remi Rocks",
-  "name": "Set reminders using Chrome's Omni-Search",
+  "name": "Set quick reminders straight from Chrome’s URL bar",
   "gcm_sender_id": "378122662806",
   "icons": [
     {
