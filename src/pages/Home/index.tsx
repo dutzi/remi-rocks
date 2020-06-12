@@ -7,12 +7,14 @@ export default function Home() {
   const modifierKey = navigator.platform === 'MacIntel' ? 'Cmd' : 'Ctrl';
   return (
     <div className={styles.wrapper}>
-      <header>
-        <Logo />
-        <div className={styles.fold}>
-          <div className={styles.whiteOverlay}></div>
-        </div>
-      </header>
+      <div className={styles.preventOverflow}>
+        <header>
+          <Logo />
+          <div className={styles.fold}>
+            <div className={styles.whiteOverlay}></div>
+          </div>
+        </header>
+      </div>
 
       <main>
         <p>Set quick reminders straight from Chrome’s URL bar.</p>
