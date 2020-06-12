@@ -21,6 +21,7 @@ function sendNotification(
       return admin.messaging().sendToDevice(user.token, {
         notification: {
           title: notification.message,
+          // icon: 'https://remi.rocks/notification-icon.png',
         },
       });
     })

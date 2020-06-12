@@ -88,7 +88,9 @@ export default function Reminders() {
 
   useEffect(() => {
     firebase.messaging().onMessage((payload) => {
-      new Notification(payload.notification.title);
+      new Notification(payload.notification.title, {
+        // icon: 'https://remi.rocks/notification-icon.png',
+      });
     });
   }, []);
 
@@ -188,7 +190,6 @@ export default function Reminders() {
       .then(() => {
         anime({
           targets: '[data-left-col]',
-          // translateX: [0, -100],
         });
         anime({
           targets: '[data-status]',
