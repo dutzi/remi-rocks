@@ -140,7 +140,7 @@ export default function Reminders() {
           .functions()
           .httpsCallable('getReminders')()
           .then((res) => {
-            setReminders(res.data.notifications);
+            setReminders(res.data.reminders);
           });
       });
   }, []);
@@ -181,7 +181,7 @@ export default function Reminders() {
 
     firebase
       .functions()
-      .httpsCallable('addNotification')({
+      .httpsCallable('addReminder')({
         message,
         timestamp: new Date(new Date().getTime() + time * 1000).getTime(),
       })

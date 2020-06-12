@@ -29,7 +29,7 @@ function sendNotification(
     });
 }
 
-export const addNotification = functions.https.onCall(async (data, context) => {
+export const addReminder = functions.https.onCall(async (data, context) => {
   if (!context.auth) {
     return { error: true, errorCode: 'auth/user-logged-out' };
   }
@@ -44,7 +44,7 @@ export const addNotification = functions.https.onCall(async (data, context) => {
 
   const uid = context.auth.uid;
 
-  await admin.firestore().collection('/notifications').add({
+  await admin.firestore().collection('/reminders').add({
     status: 'pending',
     message: data.message,
     timestamp: data.timestamp,
@@ -77,34 +77,34 @@ export const getReminders = functions.https.onCall(async (data, context) => {
 
   const uid = context.auth.uid;
 
-  const notificationDocs = await admin
+  const reminderDocs = await admin
     .firestore()
-    .collection('/notifications')
+    .collection('/reminders')
     .where('status', '==', 'pending')
     .where('uid', '==', uid)
     .get();
 
-  const notifications = notificationDocs.docs.map((doc) => doc.data());
+  const reminders = reminderDocs.docs.map((doc) => doc.data());
 
-  return { notifications };
+  return { reminders };
 });
 
 function createNotificationCall(delay: number) {
   return async (context: functions.EventContext) => {
     await new Promise((resolve) => setTimeout(resolve, delay * 1000));
 
-    const notifications = await admin
+    const reminders = await admin
       .firestore()
-      .collection('/notifications')
+      .collection('/reminders')
       .where('status', '==', 'pending')
       .get();
 
     const now = new Date().getTime();
 
     await Promise.all(
-      notifications.docs.map((doc) => {
-        const notification = doc.data();
-        if (now > notification.timestamp) {
+      reminders.docs.map((doc) => {
+        const reminder = doc.data();
+        if (now > reminder.timestamp) {
           return sendNotification(doc);
         }
         return Promise.resolve(null);
