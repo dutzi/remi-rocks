@@ -118,78 +118,78 @@ export const sendNotifications_0 = functions.pubsub
   .schedule('every 1 minutes')
   .onRun(createNotificationCall(0));
 
-export const sendNotifications_1 = functions.pubsub
-  .schedule('every 1 minutes')
-  .onRun(createNotificationCall(3));
+// export const sendNotifications_1 = functions.pubsub
+//   .schedule('every 1 minutes')
+//   .onRun(createNotificationCall(3));
 
-export const sendNotifications_2 = functions.pubsub
-  .schedule('every 1 minutes')
-  .onRun(createNotificationCall(6));
+// export const sendNotifications_2 = functions.pubsub
+//   .schedule('every 1 minutes')
+//   .onRun(createNotificationCall(6));
 
-export const sendNotifications_3 = functions.pubsub
-  .schedule('every 1 minutes')
-  .onRun(createNotificationCall(9));
+// export const sendNotifications_3 = functions.pubsub
+//   .schedule('every 1 minutes')
+//   .onRun(createNotificationCall(9));
 
-export const sendNotifications_4 = functions.pubsub
-  .schedule('every 1 minutes')
-  .onRun(createNotificationCall(12));
+// export const sendNotifications_4 = functions.pubsub
+//   .schedule('every 1 minutes')
+//   .onRun(createNotificationCall(12));
 
-export const sendNotifications_5 = functions.pubsub
-  .schedule('every 1 minutes')
-  .onRun(createNotificationCall(15));
+// export const sendNotifications_5 = functions.pubsub
+//   .schedule('every 1 minutes')
+//   .onRun(createNotificationCall(15));
 
-export const sendNotifications_6 = functions.pubsub
-  .schedule('every 1 minutes')
-  .onRun(createNotificationCall(18));
+// export const sendNotifications_6 = functions.pubsub
+//   .schedule('every 1 minutes')
+//   .onRun(createNotificationCall(18));
 
-export const sendNotifications_7 = functions.pubsub
-  .schedule('every 1 minutes')
-  .onRun(createNotificationCall(21));
+// export const sendNotifications_7 = functions.pubsub
+//   .schedule('every 1 minutes')
+//   .onRun(createNotificationCall(21));
 
-export const sendNotifications_8 = functions.pubsub
-  .schedule('every 1 minutes')
-  .onRun(createNotificationCall(24));
+// export const sendNotifications_8 = functions.pubsub
+//   .schedule('every 1 minutes')
+//   .onRun(createNotificationCall(24));
 
-export const sendNotifications_9 = functions.pubsub
-  .schedule('every 1 minutes')
-  .onRun(createNotificationCall(27));
+// export const sendNotifications_9 = functions.pubsub
+//   .schedule('every 1 minutes')
+//   .onRun(createNotificationCall(27));
 
-export const sendNotifications_10 = functions.pubsub
-  .schedule('every 1 minutes')
-  .onRun(createNotificationCall(30));
+// export const sendNotifications_10 = functions.pubsub
+//   .schedule('every 1 minutes')
+//   .onRun(createNotificationCall(30));
 
-export const sendNotifications_11 = functions.pubsub
-  .schedule('every 1 minutes')
-  .onRun(createNotificationCall(33));
+// export const sendNotifications_11 = functions.pubsub
+//   .schedule('every 1 minutes')
+//   .onRun(createNotificationCall(33));
 
-export const sendNotifications_12 = functions.pubsub
-  .schedule('every 1 minutes')
-  .onRun(createNotificationCall(36));
+// export const sendNotifications_12 = functions.pubsub
+//   .schedule('every 1 minutes')
+//   .onRun(createNotificationCall(36));
 
-export const sendNotifications_13 = functions.pubsub
-  .schedule('every 1 minutes')
-  .onRun(createNotificationCall(39));
+// export const sendNotifications_13 = functions.pubsub
+//   .schedule('every 1 minutes')
+//   .onRun(createNotificationCall(39));
 
-export const sendNotifications_14 = functions.pubsub
-  .schedule('every 1 minutes')
-  .onRun(createNotificationCall(42));
+// export const sendNotifications_14 = functions.pubsub
+//   .schedule('every 1 minutes')
+//   .onRun(createNotificationCall(42));
 
-export const sendNotifications_15 = functions.pubsub
-  .schedule('every 1 minutes')
-  .onRun(createNotificationCall(45));
+// export const sendNotifications_15 = functions.pubsub
+//   .schedule('every 1 minutes')
+//   .onRun(createNotificationCall(45));
 
-export const sendNotifications_16 = functions.pubsub
-  .schedule('every 1 minutes')
-  .onRun(createNotificationCall(48));
+// export const sendNotifications_16 = functions.pubsub
+//   .schedule('every 1 minutes')
+//   .onRun(createNotificationCall(48));
 
-export const sendNotifications_17 = functions.pubsub
-  .schedule('every 1 minutes')
-  .onRun(createNotificationCall(51));
+// export const sendNotifications_17 = functions.pubsub
+//   .schedule('every 1 minutes')
+//   .onRun(createNotificationCall(51));
 
-export const sendNotifications_18 = functions.pubsub
-  .schedule('every 1 minutes')
-  .onRun(createNotificationCall(54));
+// export const sendNotifications_18 = functions.pubsub
+//   .schedule('every 1 minutes')
+//   .onRun(createNotificationCall(54));
 
-export const sendNotifications_19 = functions.pubsub
-  .schedule('every 1 minutes')
-  .onRun(createNotificationCall(57));
+// export const sendNotifications_19 = functions.pubsub
+//   .schedule('every 1 minutes')
+//   .onRun(createNotificationCall(57));
